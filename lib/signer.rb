@@ -228,11 +228,11 @@ class Signer
   # </SecurityTokenReference> (optional)
   # </KeyInfo>
   def x509_data_node(issuer_in_security_token = false)
-    issuer_name_node   = Nokogiri::XML::Node.new('X509IssuerName', document)
+    issuer_name_node = Nokogiri::XML::Node.new('X509IssuerName', document)
     
     # emiel
     # issuer_name_node.content = cert.issuer.to_s(OpenSSL::X509::Name::RFC2253)
-    issuer_name_node.content = cert.issuer.to_s(OpenSSL::X509::Name::COMPAT)
+    issuer_name_node.content = cert.issuer.to_s(OpenSSL::X509::Name::RFC2253)
     
     issuer_number_node = Nokogiri::XML::Node.new('X509SerialNumber', document)
     issuer_number_node.content = cert.serial
@@ -241,10 +241,10 @@ class Signer
     issuer_serial_node.add_child(issuer_name_node)
     issuer_serial_node.add_child(issuer_number_node)
 
-    cetificate_node    = Nokogiri::XML::Node.new('X509Certificate', document)
+    cetificate_node = Nokogiri::XML::Node.new('X509Certificate', document)
     cetificate_node.content = Base64.encode64(cert.to_der).delete("\n")
 
-    data_node          = Nokogiri::XML::Node.new('X509Data', document)
+    data_node = Nokogiri::XML::Node.new('X509Data', document)
     data_node.add_child(issuer_serial_node)
     data_node.add_child(cetificate_node)
 
