@@ -149,8 +149,7 @@ class Signer
         @signature_node = Nokogiri::XML::Node.new('Signature', document)
         set_namespace_for_node(@signature_node, DS_NAMESPACE, ds_namespace_prefix)
         
-        # change 
-        l: 
+        # change Emiel:
         security_node.children.first.add_next_sibling(@signature_node)
         # ORG: security_node.add_child(@signature_node)
       end
