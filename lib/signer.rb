@@ -149,7 +149,8 @@ class Signer
         @signature_node = Nokogiri::XML::Node.new('Signature', document)
         set_namespace_for_node(@signature_node, DS_NAMESPACE, ds_namespace_prefix)
         
-        # change Emiel: 
+        # change 
+        l: 
         security_node.children.first.add_next_sibling(@signature_node)
         # ORG: security_node.add_child(@signature_node)
       end
@@ -232,7 +233,7 @@ class Signer
     
     # emiel
     # issuer_name_node.content = cert.issuer.to_s(OpenSSL::X509::Name::RFC2253)
-    issuer_name_node.content = cert.issuer.to_s(RFC2253)
+    issuer_name_node.content = cert.issuer.to_utf8
     
     issuer_number_node = Nokogiri::XML::Node.new('X509SerialNumber', document)
     issuer_number_node.content = cert.serial
