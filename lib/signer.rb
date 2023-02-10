@@ -229,8 +229,10 @@ class Signer
   # </KeyInfo>
   def x509_data_node(issuer_in_security_token = false)
     issuer_name_node   = Nokogiri::XML::Node.new('X509IssuerName', document)
-     # issuer_name_node.content = cert.issuer.to_s(OpenSSL::X509::Name::RFC2253)
-    issuer_name_node.content = cert.issuer.to_der(OpenSSL::X509::Name::RFC2253)
+    
+    # emiel
+    # issuer_name_node.content = cert.issuer.to_s(OpenSSL::X509::Name::RFC2253)
+    issuer_name_node.content = cert.issuer.to_s(OpenSSL::X509::Name::COMPAT)
     
     issuer_number_node = Nokogiri::XML::Node.new('X509SerialNumber', document)
     issuer_number_node.content = cert.serial
