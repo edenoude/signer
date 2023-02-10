@@ -150,7 +150,7 @@ class Signer
         set_namespace_for_node(@signature_node, DS_NAMESPACE, ds_namespace_prefix)
         
         # change Emiel: 
-        security_node.children.before.next_element(@signature_node)
+        security_node.children.before(@signature_node)
         # ORG: security_node.add_child(@signature_node)
       end
       @signature_node
