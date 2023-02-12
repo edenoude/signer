@@ -239,7 +239,7 @@ class Signer
     cert_data = cert.to_pem
     factory = CertificateFactory.getInstance("X.509")
     cert2 = factory.generateCertificate(ByteArrayInputStream.new(cert_data.to_java_bytes))
-    issuer = X500Principal.new(cert2.issuer_dn.name).get_name()
+    issuer = cert2.getIssuerX500Principal().getName()
     
     
     # issuer_name_node.content = cert.issuer.to_s(OpenSSL::X509::Name::RFC2253)
