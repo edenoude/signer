@@ -2,7 +2,7 @@ require "nokogiri"
 require "base64"
 require "digest/sha1"
 require "openssl"
-
+require "java" 
 require "signer/digester"
 require "signer/version"
 
@@ -231,8 +231,19 @@ class Signer
     issuer_name_node = Nokogiri::XML::Node.new('X509IssuerName', document)
     
     # emiel
+    
+    java_import java.security.cert.CertificateFactory
+    java_import java.io.ByteArrayInputStream
+    java_import javax.security.auth.x500.X500Principal
+
+    cert_data = cert
+    factory = CertificateFactory.getInstance("X.509")
+    cert2 = factory.generateCertificate(ByteArrayInputStream.new(cert_data.to_java_bytes))
+    issuer = X500Principal.new(cert2.issuer_dn.name).get_name()
+    
+    
     # issuer_name_node.content = cert.issuer.to_s(OpenSSL::X509::Name::RFC2253)
-    issuer_name_node.content = cert.issuer.to_utf8
+    issuer_name_node.content = issuer
     
     issuer_number_node = Nokogiri::XML::Node.new('X509SerialNumber', document)
     issuer_number_node.content = cert.serial
