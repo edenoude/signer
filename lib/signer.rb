@@ -236,10 +236,9 @@ class Signer
     java_import java.io.ByteArrayInputStream
     java_import javax.security.auth.x500.X500Principal
     
-    Rails.logger.debug cert.to_pem
-    cert_data = cert
+    cert_data = cert.to_pem
     factory = CertificateFactory.getInstance("X.509")
-    cert2 = factory.generateCertificate(ByteArrayInputStream.new(cert_data.to_pem))
+    cert2 = factory.generateCertificate(ByteArrayInputStream.new(cert_data.to_java_bytes))
     issuer = X500Principal.new(cert2.issuer_dn.name).get_name()
     
     
